@@ -35,7 +35,7 @@ Example: \`new Point(1, 2).y\` → \`2\``,
       kind: "complete",
       difficulty: 1,
       tags: ["classes"],
-      description: `Add a \`distanceTo(other)\` method to \`Point\` that returns the Euclidean distance to another point.
+      description: `Add a \`distanceTo(other)\` method to \`Point\` that returns the Euclidean distance to another point. Write it as a regular class method (shared on the prototype), not an arrow-function field.
 
 Example: \`new Point(0, 0).distanceTo(new Point(3, 4))\` → \`5\``,
       starter: `class Point {
@@ -238,7 +238,7 @@ Example: \`User.count = 0; new User("a"); new User("b"); User.count\` → \`2\``
       kind: "implement",
       difficulty: 2,
       tags: ["classes"],
-      description: `Write \`BankAccount\` with a private \`#balance\` (starting at the constructor argument, default \`0\`), \`deposit(amount)\`, \`withdraw(amount)\` and a \`balance\` getter. \`withdraw\` throws an \`Error\` with message \`"Insufficient funds"\` if the amount exceeds the balance. Instances have no public own properties.
+      description: `Write \`BankAccount\` with a private \`#balance\` (starting at the constructor argument, default \`0\`), \`deposit(amount)\`, \`withdraw(amount)\` and a read-only \`balance\` getter (no setter, so assigning to it throws in strict mode). \`withdraw\` throws an \`Error\` with message \`"Insufficient funds"\` if the amount exceeds the balance. Instances have no public own properties.
 
 Example: \`const a = new BankAccount(10); a.deposit(5); a.balance\` → \`15\``,
       starter: `class BankAccount {
@@ -502,7 +502,7 @@ Example: \`isInstance([], Object)\` → \`true\``,
       kind: "implement",
       difficulty: 2,
       tags: ["classes", "higher-order"],
-      description: `Write \`defineRecord(...fields)\` that returns a new class (a class expression). Its constructor takes one value per field, in order, and assigns each to the matching property. Every call returns a distinct class.
+      description: `Write \`defineRecord(...fields)\` that returns a new class (a class expression). Its constructor takes one value per field, in order, and assigns each to the matching property. Every field becomes an own property even when its argument is missing (it is then \`undefined\`). Every call returns a distinct class.
 
 Example: \`const Point = defineRecord("x", "y"); new Point(1, 2).y\` → \`2\``,
       starter: `function defineRecord(...fields) {\n  \n}`,
@@ -681,7 +681,7 @@ Example: \`[...new Range(1, 5)]\` → \`[1, 2, 3, 4]\``,
 - \`area()\` that throws an \`Error\` with message \`"not implemented"\` unless a subclass overrides it
 - \`describe()\` returning \`"<ClassName> with area <area>"\`
 
-Example: \`new Square(2).describe()\` → \`"Square with area 4"\``,
+Example: for \`class Square extends Shape\` whose \`area()\` returns \`side ** 2\`, \`new Square(2).describe()\` → \`"Square with area 4"\``,
       starter: `class Shape {\n  \n}`,
       solution: `class Shape {
   constructor() {
@@ -716,7 +716,7 @@ Example: \`new Square(2).describe()\` → \`"Square with area 4"\``,
       tags: ["classes", "higher-order"],
       description: `Write \`Serializable(Base)\`, a mixin that returns a subclass of \`Base\` adding \`serialize()\`, which returns the instance's own enumerable properties as a JSON string. Instances keep everything from \`Base\`.
 
-Example: \`new (Serializable(User))("Ada").serialize()\` → \`'{"name":"Ada"}'\``,
+Example: with \`class User { constructor(name) { this.name = name; } }\`, \`new (Serializable(User))("Ada").serialize()\` → \`'{"name":"Ada"}'\``,
       starter: `function Serializable(Base) {\n  \n}`,
       solution: `function Serializable(Base) {
   return class extends Base {

@@ -213,7 +213,11 @@ export function Workbench({
         )}
       </div>
 
-      <section className={`card overflow-hidden border transition-colors ${border}`} aria-label="Code editor">
+      <section
+        id="editor"
+        className={`card overflow-hidden border transition-colors ${border}`}
+        aria-label="Code editor"
+      >
         <div className="flex items-center justify-end border-b border-border px-3 py-1.5">
           <button
             type="button"

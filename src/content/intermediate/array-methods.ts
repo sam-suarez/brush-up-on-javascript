@@ -768,7 +768,7 @@ Example: \`range(2, 6)\` → \`[2, 3, 4, 5]\``,
     },
     {
       slug: "array-of-fill",
-      title: "Array.of and fill: the shared object trap",
+      title: "fill: the shared reference trap",
       kind: "fix",
       difficulty: 2,
       tags: ["arrays", "references"],

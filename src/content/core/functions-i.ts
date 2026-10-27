@@ -385,7 +385,7 @@ Example: \`createUser("Ada")\` → \`{ name: "Ada", role: "viewer" }\``,
       kind: "implement",
       difficulty: 2,
       tags: ["functions", "defaults"],
-      description: `Write \`rectangle(width, height)\` that returns \`{ width, height, area }\`. When \`height\` is omitted it defaults to \`width\` (a square). Use a default parameter, not a check in the body.
+      description: `Write \`rectangle(width, height)\` that returns \`{ width, height, area }\`. When \`height\` is omitted or \`undefined\` it defaults to \`width\` (a square). Use a default parameter, not a check in the body: the tests check \`rectangle.length\`, which stops counting at the first parameter that has a default.
 
 Example: \`rectangle(4)\` → \`{ width: 4, height: 4, area: 16 }\``,
       starter: `function rectangle(width, height) {\n  return { width, height, area: width * height };\n}`,

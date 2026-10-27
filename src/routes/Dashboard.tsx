@@ -62,7 +62,7 @@ export function Component() {
       </div>
 
       <h2 className="mt-10 text-lg font-semibold">Courses</h2>
-      <div className="mt-3 grid gap-4 md:grid-cols-2">
+      <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
         {courses.map((course) => {
           const tally = courseProgress(progress, course.slug);
           const next = nextInCourse(progress, course.slug);
@@ -103,7 +103,7 @@ export function Component() {
         })}
       </div>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
+      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
         <section className="card p-5" aria-labelledby="recent-heading">
           <h2 id="recent-heading" className="text-lg font-semibold">
             Recently solved

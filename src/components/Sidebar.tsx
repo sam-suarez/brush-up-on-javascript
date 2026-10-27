@@ -54,7 +54,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       <nav aria-label="More" className="mt-auto flex flex-col gap-1 border-t border-border pt-4">
-        <NavLink to="/interview" className={navItem}>
+        <NavLink to="/interview-mode" className={navItem}>
           <BriefcaseIcon /> Interview mode
         </NavLink>
         <NavLink to="/#data" className={() => navItem({ isActive: false })}>

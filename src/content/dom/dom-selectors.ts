@@ -41,7 +41,7 @@ function getTitleText() {
 
 It must read the DOM on every call, not cache the answer.
 
-Example: with the markup shown, \`activeLabel()\` → \`"Docs"\``,
+Example: the menu starts with Docs and Blog both active, so \`activeLabel()\` → \`"Docs"\``,
       html: `<nav>
   <ul class="menu">
     <li class="item">Home</li>
@@ -75,9 +75,9 @@ assert.equal(activeLabel(), null);`,
       kind: "implement",
       difficulty: 1,
       tags: ["dom"],
-      description: `Write \`checkedLabels()\` that returns a real array with the trimmed label text of every checked checkbox inside \`#prefs\`, in document order. Also write \`countChecked()\` that returns how many are checked.
+      description: `Write \`checkedLabels()\` that returns a real array with the trimmed label text of every checked checkbox inside \`#prefs\`, in document order. Each checkbox sits inside its \`<label>\`, and there is one more checked box outside \`#prefs\` that must be ignored. Also write \`countChecked()\` that returns how many are checked.
 
-Example: with the markup shown, \`checkedLabels()\` → \`["Email", "Push"]\``,
+Example: Email and Push start checked, so \`checkedLabels()\` → \`["Email", "Push"]\``,
       html: `<fieldset id="prefs">
   <legend>Notifications</legend>
   <label><input type="checkbox" checked> Email</label>

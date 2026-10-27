@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Outlet, useNavigation, useParams } from "react-router";
+import { Outlet, useLocation, useNavigation, useParams } from "react-router";
 import { MenuIcon, XIcon } from "../components/Icons";
 import { Sidebar } from "../components/Sidebar";
+import { useSessionActive } from "../lib/interviewSession";
 
 export function Component() {
   const { challenge } = useParams();
+  const { pathname } = useLocation();
   const navigation = useNavigation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const interviewing = useSessionActive() && pathname === "/interview-mode";
 
-  // The challenge workbench brings its own left rail.
-  if (challenge) {
+  // The challenge workbench brings its own left rail; a running interview session goes full width.
+  if (challenge || interviewing) {
     return (
       <>
         {navigation.state === "loading" && <LoadingBar />}
@@ -21,6 +24,9 @@ export function Component() {
   return (
     <div className="min-h-full min-[900px]:pl-[260px]">
       {navigation.state === "loading" && <LoadingBar />}
+      <a href="#main" className="skip-link btn btn-primary">
+        Skip to content
+      </a>
       <aside className="fixed inset-y-0 left-0 hidden w-[260px] border-r border-border bg-bg min-[900px]:block">
         <Sidebar />
       </aside>
@@ -43,7 +49,7 @@ export function Component() {
         </div>
       )}
 
-      <main className="mx-auto max-w-4xl px-5 py-8 sm:px-8">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-4xl px-5 py-8 outline-none sm:px-8">
         <Outlet />
       </main>
     </div>

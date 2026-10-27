@@ -353,7 +353,7 @@ assert.equal(index.b, b);`,
       kind: "implement",
       difficulty: 1,
       tags: ["objects", "immutability"],
-      description: `Write \`renameKeys(obj, mapping)\` that returns a new object where each key found in \`mapping\` is renamed to \`mapping[key]\`. Other keys are copied unchanged. Don't mutate \`obj\`.
+      description: `Write \`renameKeys(obj, mapping)\` that returns a new object where each key found in \`mapping\` is renamed to \`mapping[key]\`. Only \`mapping\`'s own keys count: a key such as \`toString\` must not be renamed by the method \`mapping\` inherits from \`Object.prototype\`. Other keys are copied unchanged. Don't mutate \`obj\`.
 
 Example: \`renameKeys({ first_name: "Ada", age: 36 }, { first_name: "firstName" })\` → \`{ firstName: "Ada", age: 36 }\``,
       starter: `function renameKeys(obj, mapping) {\n  \n}\n`,

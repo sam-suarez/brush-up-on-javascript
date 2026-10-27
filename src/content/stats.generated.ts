@@ -115,7 +115,7 @@ export const topicStats: Record<string, { count: number; challenges: ChallengeMe
       {"slug":"flat-map","title":"flatMap","difficulty":1},
       {"slug":"join-sentence","title":"join into a sentence","difficulty":2},
       {"slug":"array-from-map","title":"Array.from with a mapping function","difficulty":1},
-      {"slug":"array-of-fill","title":"Array.of and fill: the shared object trap","difficulty":2},
+      {"slug":"array-of-fill","title":"fill: the shared reference trap","difficulty":2},
       {"slug":"at-negative","title":"at() with a negative index","difficulty":1},
       {"slug":"chain","title":"Chain map, filter and reduce","difficulty":2},
     ],
@@ -132,7 +132,7 @@ export const topicStats: Record<string, { count: number; challenges: ChallengeMe
       {"slug":"promise-all","title":"Promise.all","difficulty":1},
       {"slug":"all-settled","title":"Promise.allSettled","difficulty":2},
       {"slug":"race","title":"Promise.race","difficulty":2},
-      {"slug":"any","title":"Promise.any","difficulty":2},
+      {"slug":"any","title":"Promise.any","difficulty":1},
       {"slug":"sequential-vs-parallel","title":"Sequential vs parallel awaits","difficulty":2},
       {"slug":"callback-to-promise","title":"Convert a callback API to a promise","difficulty":2},
       {"slug":"microtask-order","title":"Microtask vs macrotask order","difficulty":3},
@@ -181,7 +181,7 @@ export const topicStats: Record<string, { count: number; challenges: ChallengeMe
       {"slug":"recursion-sum-nested","title":"Recursion: sum a nested array","difficulty":2},
       {"slug":"length-and-name","title":"Function.length and Function.name","difficulty":2},
       {"slug":"call-and-apply","title":"call and apply","difficulty":1},
-      {"slug":"bind-lost-this","title":"bind: fix a lost this","difficulty":2},
+      {"slug":"bind-lost-this","title":"bind: fix a lost this","difficulty":1},
     ],
   },
   "intermediate/objects-ii": {
@@ -298,7 +298,7 @@ export const topicStats: Record<string, { count: number; challenges: ChallengeMe
   "practice/dates": {
     count: 8,
     challenges: [
-      {"slug":"create-from-parts","title":"Create a date from parts (month is zero-based)","difficulty":1},
+      {"slug":"create-from-parts","title":"Create a date from parts","difficulty":1},
       {"slug":"format-iso-date","title":"Format as YYYY-MM-DD","difficulty":1},
       {"slug":"add-days","title":"Add days","difficulty":2},
       {"slug":"diff-in-days","title":"Difference in days","difficulty":2},

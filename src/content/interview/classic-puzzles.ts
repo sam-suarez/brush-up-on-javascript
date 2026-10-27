@@ -263,7 +263,7 @@ Example: \`matchRoute("/users/:id/posts/:postId", "/users/42/posts/7")\` → \`{
       kind: "implement",
       difficulty: 2,
       tags: ["algorithms"],
-      description: `Write \`parseQuery(query)\` that turns a URL query string into a plain object. The leading \`?\` is optional. Values are decoded (\`+\` means space). A key without \`=\` has value \`""\`. A key that appears more than once maps to an array of its values in order. \`""\` and \`"?"\` give \`{}\`.
+      description: `Write \`parseQuery(query)\` that turns a URL query string into a plain object. The leading \`?\` is optional. Keys and values are decoded (\`+\` means space). A key without \`=\` has value \`""\`. A key that appears more than once maps to an array of its values in order. \`""\` and \`"?"\` give \`{}\`.
 
 Example: \`parseQuery("?a=1&b=x+y&a=2&flag")\` → \`{ a: ["1", "2"], b: "x y", flag: "" }\``,
       starter: `function parseQuery(query) {

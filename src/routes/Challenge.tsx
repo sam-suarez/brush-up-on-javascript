@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { data, Link, useLoaderData, useNavigate, type LoaderFunctionArgs } from "react-router";
 import { Breadcrumb } from "../components/Breadcrumb";
 import { ChallengeList } from "../components/ChallengeList";
@@ -24,8 +24,20 @@ export function Component() {
   const { course, meta, topic, challenge } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const progress = useProgress();
-  const [railOpen, setRailOpen] = useState(false);
   const id = challengeId(course.slug, topic.slug, challenge.slug);
+  // Below 900px the rail is a drawer. Keyed by challenge so it closes once you pick one.
+  const [railOpenFor, setRailOpenFor] = useState<string | null>(null);
+  const railOpen = railOpenFor === id;
+  const setRailOpen = (open: boolean) => setRailOpenFor(open ? id : null);
+
+  useEffect(() => {
+    if (!railOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setRailOpenFor(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [railOpen]);
   const { prev, next } = sequenceNeighbours(id);
   const topicPath = `/${course.slug}/${topic.slug}`;
   const nextPath = next ? challengePath(next) : `/${course.slug}`;
@@ -47,6 +59,16 @@ export function Component() {
   return (
     <div className="min-h-full min-[900px]:pl-[260px]">
       <title>{`${challenge.title} · brush up on javascript`}</title>
+      <a
+        href="#editor"
+        className="skip-link btn btn-primary"
+        onClick={(e) => {
+          e.preventDefault();
+          document.querySelector<HTMLElement>("#editor .cm-content")?.focus();
+        }}
+      >
+        Skip to editor
+      </a>
       <aside
         className={`fixed inset-y-0 left-0 z-30 w-[260px] border-r border-border bg-bg ${railOpen ? "block" : "hidden"} min-[900px]:block`}
       >
@@ -66,6 +88,7 @@ export function Component() {
             type="button"
             className="rounded-lg p-1.5 hover:bg-bg-raised min-[900px]:invisible"
             aria-label="Show challenge list"
+            aria-expanded={railOpen}
             onClick={() => setRailOpen(true)}
           >
             <MenuIcon size={20} />

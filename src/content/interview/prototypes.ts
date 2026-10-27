@@ -357,7 +357,7 @@ Object.setPrototypeOf(Square, Rectangle);`,
       tags: ["prototype"],
       description: `Write \`isInstanceOf(value, Ctor)\` that returns whether \`Ctor.prototype\` appears anywhere on \`value\`'s prototype chain, without using \`instanceof\` or \`isPrototypeOf\`.
 
-Primitives return \`false\` (like \`instanceof\`, so \`isInstanceOf(5, Number)\` → \`false\`), and objects with a \`null\` prototype return \`false\` for every constructor.`,
+Primitives (including \`null\` and \`undefined\`) return \`false\`, like \`instanceof\` does: \`isInstanceOf(5, Number)\` → \`false\`. Functions are objects, so \`isInstanceOf(() => {}, Function)\` → \`true\`. Objects with a \`null\` prototype return \`false\` for every constructor.`,
       starter: `function isInstanceOf(value, Ctor) {\n  \n}`,
       solution: `function isInstanceOf(value, Ctor) {
   if (value === null || (typeof value !== "object" && typeof value !== "function")) return false;

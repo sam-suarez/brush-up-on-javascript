@@ -592,7 +592,7 @@ Example: \`emitter.on("x", log); emitter.emit("x", 1)\` → \`log(1)\` and retur
       tags: ["data structures"],
       description: `Write a class \`LRUCache\` constructed with a \`capacity\`. \`get(key)\` returns the value (or \`undefined\`) and marks the key as most recently used. \`put(key, value)\` inserts or updates (also marking it most recently used) and, when over capacity, evicts the least recently used key. A \`size\` getter returns the number of entries. Both operations should be O(1).
 
-Example: capacity 2, \`put("a"); put("b"); get("a"); put("c")\` → \`"b"\` is evicted`,
+Example: capacity 2, \`put("a", 1); put("b", 2); get("a"); put("c", 3)\` → \`"b"\` is evicted`,
       starter: `class LRUCache {
   constructor(capacity) {
     this.capacity = capacity;
