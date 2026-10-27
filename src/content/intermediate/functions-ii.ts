@@ -343,9 +343,9 @@ function introduceWithApply(person, args) {
       slug: "bind-lost-this",
       title: "bind: fix a lost this",
       kind: "fix",
-      difficulty: 2,
+      difficulty: 1,
       tags: ["this"],
-      description: `Passing \`logger.log\` as a callback loses its receiver, so the script throws. Fix it with \`bind\` so \`handler\` always logs through \`logger\`.
+      description: `The script throws a \`TypeError\` instead of logging. Fix it with \`bind\` so \`handler\` always logs through \`logger\`, however it is called.
 
 Example: after the script runs, \`logger.messages\` → \`["[app] ready"]\``,
       starter: `const logger = {

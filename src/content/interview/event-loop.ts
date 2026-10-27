@@ -209,7 +209,7 @@ const expected = ["1", "7", "3", "5", "6", "4", "2"];`,
       tags: ["event-loop", "async"],
       description: `\`processInChunks(items, size, onChunk)\` calls \`onChunk\` with consecutive slices of \`items\` and resolves once every chunk is handled. It is meant to stay responsive: a timer that is already queued when processing starts should get to run between chunks. Right now such a timer only runs after everything has finished. Fix it.
 
-Chunks must still be handled in order, and the promise resolves after the last one.
+Keep the rest of the behaviour: the first chunk is handled synchronously, chunks are handled in order, and the promise resolves after the last one.
 
 Example: \`setTimeout(() => log("timer")); processInChunks([1, 2, 3, 4], 2, (c) => log(c.join("")))\` → logs \`"12", "timer", "34"\``,
       starter: `function processInChunks(items, size, onChunk) {
@@ -335,8 +335,8 @@ Example: \`await countdown(3, 5, log)\` → logs \`3, 2, 1\``,
           code: `const ticks = [];\nawait countdown(2, 5, (n) => ticks.push(n));\nawait wait(25);\nassert.deepEqual(ticks, [2, 1]);`,
         },
         {
-          name: "resolves immediately for 0",
-          code: `const ticks = [];\nawait countdown(0, 5, (n) => ticks.push(n));\nawait wait(15);\nassert.deepEqual(ticks, []);`,
+          name: "resolves immediately for 0 or less",
+          code: `const ticks = [];\nawait countdown(0, 5, (n) => ticks.push(n));\nawait countdown(-2, 5, (n) => ticks.push(n));\nawait wait(15);\nassert.deepEqual(ticks, []);`,
         },
       ],
     },

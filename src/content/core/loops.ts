@@ -65,7 +65,7 @@ Example: \`longestWord(["a", "abc", "ab"])\` → \`"abc"\``,
       kind: "implement",
       difficulty: 2,
       tags: ["iteration", "prototype"],
-      description: `Write \`formatEntries(obj)\` using \`for...in\` that returns an array of \`"key=value"\` strings for the object's own properties, in key order. Skip inherited enumerable properties.
+      description: `Write \`formatEntries(obj)\` using \`for...in\` that returns an array of \`"key=value"\` strings for the object's own properties, in the order \`for...in\` visits them. Skip inherited enumerable properties.
 
 Example: \`formatEntries({ a: 1, b: "x" })\` → \`["a=1", "b=x"]\``,
       starter: `function formatEntries(obj) {\n  \n}`,

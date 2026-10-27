@@ -20,7 +20,7 @@ No backend, no environment variables, no external services at runtime. Fonts are
 | Path | Module | Purpose |
 | --- | --- | --- |
 | `/` | `routes/Dashboard.tsx` | Overall progress, continue card, course cards, stats, export/import |
-| `/interview` | `routes/Interview.tsx` | Timed random challenge set |
+| `/interview-mode` | `routes/Interview.tsx` | Timed random challenge set |
 | `/:course` | `routes/Course.tsx` | Vertical timeline of topics with x/y completion |
 | `/:course/:topic` | `routes/Topic.tsx` | Vertical timeline of challenges with ticks and a NEXT marker |
 | `/:course/:topic/:challenge` | `routes/Challenge.tsx` | The workbench |
@@ -126,3 +126,4 @@ npm run validate   typecheck + lint + test  (what CI would run)
 - **Extra files:** `src/components/Workbench.tsx` (shared by the challenge page and interview mode), `DataPanel.tsx`, `Breadcrumb.tsx`, `Icons.tsx`, `editorTheme.ts`; `src/lib/challengeIndex.ts`, `storage.ts`, `dates.ts`, `interview.ts`.
 - **No `/_runner` debug page** was built. The harness tests and the content suite covered it.
 - The sidebar GitHub link points at `REPO_URL` in `src/components/Sidebar.tsx`.
+- **Interview mode lives at `/interview-mode`**, not `/interview`. The Interview Prep course's slug is `interview`, and a static `/interview` route shadowed its course page. A running session is held in `src/lib/interviewSession.ts` (outside React) so the Shell can drop the sidebar for the session without losing it.

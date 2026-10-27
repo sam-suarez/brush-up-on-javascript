@@ -6,36 +6,19 @@ import { Workbench } from "../components/Workbench";
 import { courses } from "../content/catalog";
 import { loadChallenge } from "../content/load";
 import type { Challenge, Difficulty, Topic } from "../content/types";
-import { challengePath, type ChallengeRef } from "../lib/challengeIndex";
+import { challengePath } from "../lib/challengeIndex";
 import { formatDuration } from "../lib/dates";
 import { candidates, loadSetup, pickChallenges, saveSetup, type InterviewSetup } from "../lib/interview";
+import { setSession, useSession, type Outcome, type Session } from "../lib/interviewSession";
 import { difficultyLabel } from "../lib/stats";
 import type { RunResult } from "../runner/types";
 
-type Outcome = "solved" | "failed" | "skipped" | "unreached";
-
-interface Item {
-  ref: ChallengeRef;
-  outcome: Outcome;
-  attempted: boolean;
-  timeMs: number;
-}
-
-interface Session {
-  items: Item[];
-  index: number;
-  startedAt: number;
-  itemStartedAt: number;
-  limitMs: number;
-  endedAt?: number;
-}
-
 export function Component() {
-  const [session, setSession] = useState<Session | null>(null);
+  const session = useSession();
 
   if (!session) return <Setup onStart={setSession} />;
   if (session.endedAt) return <Results session={session} onRestart={() => setSession(null)} />;
-  return <SessionView session={session} setSession={setSession} />;
+  return <SessionView session={session} />;
 }
 
 function Setup({ onStart }: { onStart: (s: Session) => void }) {
@@ -82,7 +65,7 @@ function Setup({ onStart }: { onStart: (s: Session) => void }) {
       >
         <fieldset>
           <legend className="text-lg font-semibold">Topics</legend>
-          <div className="mt-3 grid gap-4 md:grid-cols-2">
+          <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
             {courses.map((course) => {
               const keys = course.topics.filter((t) => t.count > 0).map((t) => `${course.slug}/${t.slug}`);
               const allOn = keys.length > 0 && keys.every((k) => setup.topics.includes(k));
@@ -128,7 +111,7 @@ function Setup({ onStart }: { onStart: (s: Session) => void }) {
           </div>
         </fieldset>
 
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           <fieldset>
             <legend className="font-semibold">Difficulty</legend>
             <div className="mt-2 flex flex-col gap-1">
@@ -210,13 +193,7 @@ function useNow(active: boolean) {
   return now;
 }
 
-function SessionView({
-  session,
-  setSession,
-}: {
-  session: Session;
-  setSession: React.Dispatch<React.SetStateAction<Session | null>>;
-}) {
+function SessionView({ session }: { session: Session }) {
   const now = useNow(true);
   const item = session.items[session.index]!;
   const [loaded, setLoaded] = useState<{ id: string; topic: Topic; challenge: Challenge } | null>(null);
@@ -234,43 +211,37 @@ function SessionView({
   }, [item.ref]);
 
   /** Close the current item with an outcome and move on (or end the session). */
-  const advance = useCallback(
-    (outcome: Outcome | null, endAll = false) => {
-      setSession((s) => {
-        if (!s || s.endedAt) return s;
-        const at = Date.now();
-        const items = s.items.map((it, i) => {
-          if (i !== s.index) return it;
-          const final: Outcome =
-            outcome ?? (it.outcome === "solved" ? "solved" : it.attempted ? "failed" : "skipped");
-          return { ...it, outcome: final, timeMs: it.timeMs + (at - s.itemStartedAt) };
-        });
-        const last = s.index >= s.items.length - 1;
-        if (endAll || last) return { ...s, items, endedAt: at };
-        return { ...s, items, index: s.index + 1, itemStartedAt: at };
+  const advance = useCallback((outcome: Outcome | null, endAll = false) => {
+    setSession((s) => {
+      if (!s || s.endedAt) return s;
+      const at = Date.now();
+      const items = s.items.map((it, i) => {
+        if (i !== s.index) return it;
+        const final: Outcome =
+          outcome ?? (it.outcome === "solved" ? "solved" : it.attempted ? "failed" : "skipped");
+        return { ...it, outcome: final, timeMs: it.timeMs + (at - s.itemStartedAt) };
       });
-    },
-    [setSession],
-  );
+      const last = s.index >= s.items.length - 1;
+      if (endAll || last) return { ...s, items, endedAt: at };
+      return { ...s, items, index: s.index + 1, itemStartedAt: at };
+    });
+  }, []);
 
   useEffect(() => {
     if (remaining <= 0) advance(null, true);
   }, [remaining, advance]);
 
-  const onResult = useCallback(
-    (result: RunResult) => {
-      setSession((s) => {
-        if (!s) return s;
-        const items = s.items.map((it, i) =>
-          i === s.index
-            ? { ...it, attempted: true, outcome: result.status === "pass" ? ("solved" as const) : it.outcome }
-            : it,
-        );
-        return { ...s, items };
-      });
-    },
-    [setSession],
-  );
+  const onResult = useCallback((result: RunResult) => {
+    setSession((s) => {
+      if (!s) return s;
+      const items = s.items.map((it, i) =>
+        i === s.index
+          ? { ...it, attempted: true, outcome: result.status === "pass" ? ("solved" as const) : it.outcome }
+          : it,
+      );
+      return { ...s, items };
+    });
+  }, []);
 
   const solved = item.outcome === "solved";
 
@@ -346,7 +317,7 @@ function Results({ session, onRestart }: { session: Session; onRestart: () => vo
       <Breadcrumb
         items={[
           { label: "Home", to: "/" },
-          { label: "Interview mode", to: "/interview" },
+          { label: "Interview mode", to: "/interview-mode" },
           { label: "Results" },
         ]}
       />

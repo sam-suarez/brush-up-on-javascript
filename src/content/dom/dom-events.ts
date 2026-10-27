@@ -107,7 +107,7 @@ assert.equal(document.getElementById("preview").textContent, "stranger");`,
       kind: "complete",
       difficulty: 2,
       tags: ["dom", "events"],
-      description: `Handle submit on \`#signup\`: prevent the page navigation, read the fields with \`FormData\`, push a plain object \`{ email, plan }\` onto \`submissions\`, and set \`#status\` to \`"Thanks, <email>!"\`.
+      description: `Handle submit on \`#signup\`: prevent the page navigation, read the fields (named \`email\` and \`plan\`) with \`FormData\`, push a plain object \`{ email, plan }\` onto \`submissions\`, and set \`#status\` to \`"Thanks, <email>!"\`.
 
 Example: \`submit with ada@example.com / pro\` → \`submissions.at(-1)\` is \`{ email: "ada@example.com", plan: "pro" }\``,
       html: `<form id="signup">

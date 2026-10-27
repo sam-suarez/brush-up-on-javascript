@@ -262,7 +262,7 @@ Example: \`await withTimeout(new Promise(() => {}), 10)\` → rejects with \`Err
       slug: "any",
       title: "Promise.any",
       kind: "implement",
-      difficulty: 2,
+      difficulty: 1,
       tags: ["async"],
       description: `Write \`firstSuccess(promises)\` that resolves with the first promise to fulfil, ignoring rejections. If every promise rejects, it rejects with an \`AggregateError\`.
 

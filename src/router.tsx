@@ -12,7 +12,7 @@ export const router = createBrowserRouter([
         ErrorBoundary: RouteError,
         children: [
           { index: true, lazy: () => import("./routes/Dashboard") },
-          { path: "interview", lazy: () => import("./routes/Interview") },
+          { path: "interview-mode", lazy: () => import("./routes/Interview") },
           { path: ":course", lazy: () => import("./routes/Course") },
           { path: ":course/:topic", lazy: () => import("./routes/Topic") },
           { path: ":course/:topic/:challenge", lazy: () => import("./routes/Challenge") },

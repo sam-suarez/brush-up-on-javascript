@@ -43,11 +43,13 @@ Example: \`await sleep(20)\` → \`undefined\`, roughly 20 ms later`,
       kind: "implement",
       difficulty: 3,
       tags: ["async"],
-      description: `Write \`promiseAll(iterable)\` that behaves like \`Promise.all\`, without calling it. It resolves with the values in input order (not settle order), rejects with the first rejection reason, and treats non-promise values as already resolved.
+      description: `Write \`promiseAll(iterable)\` that behaves like \`Promise.all\`, without calling \`Promise.all\` (\`Promise.resolve\` and \`new Promise\` are fine). It resolves with the values in input order (not settle order), rejects with the reason of the first item to reject, and treats non-promise values as already resolved.
 
 Accept any iterable. An empty iterable resolves to \`[]\`.
 
-Example: \`await promiseAll([later(20, "a"), later(5, "b"), 3])\` → \`["a", "b", 3]\``,
+Example: \`await promiseAll([later(20, "a"), later(5, "b"), 3])\` → \`["a", "b", 3]\`
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `function promiseAll(iterable) {\n  \n}`,
       solution: `function promiseAll(iterable) {
   return new Promise((resolve, reject) => {
@@ -90,7 +92,7 @@ Example: \`await promiseAll([later(20, "a"), later(5, "b"), 3])\` → \`["a", "b
       kind: "implement",
       difficulty: 2,
       tags: ["async"],
-      description: `Write \`allSettled(iterable)\` that behaves like \`Promise.allSettled\`, without calling it. It never rejects; it resolves, in input order, with \`{ status: "fulfilled", value }\` or \`{ status: "rejected", reason }\` for each item. Non-promise values count as fulfilled; an empty iterable resolves to \`[]\`.
+      description: `Write \`allSettled(iterable)\` that behaves like \`Promise.allSettled\`, without calling \`Promise.allSettled\` (\`Promise.all\` is fine). It never rejects; it resolves, in input order, with \`{ status: "fulfilled", value }\` or \`{ status: "rejected", reason }\` for each item. Non-promise values count as fulfilled; an empty iterable resolves to \`[]\`.
 
 Example: \`await allSettled([1, Promise.reject("x")])\` → \`[{ status: "fulfilled", value: 1 }, { status: "rejected", reason: "x" }]\``,
       starter: `function allSettled(iterable) {\n  \n}`,
@@ -125,9 +127,11 @@ Example: \`await allSettled([1, Promise.reject("x")])\` → \`[{ status: "fulfil
       kind: "implement",
       difficulty: 2,
       tags: ["async"],
-      description: `Write \`race(iterable)\` that behaves like \`Promise.race\`, without calling it: it settles the same way as the first item to settle, fulfilled or rejected. Non-promise values count as already resolved. An empty iterable returns a promise that stays pending forever.
+      description: `Write \`race(iterable)\` that behaves like \`Promise.race\`, without calling \`Promise.race\`: it settles the same way as the first item to settle, fulfilled or rejected. Non-promise values count as already resolved. An empty iterable returns a promise that stays pending forever.
 
-Example: \`await race([later(20, "slow"), later(5, "fast")])\` → \`"fast"\``,
+Example: \`await race([later(20, "slow"), later(5, "fast")])\` → \`"fast"\`
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `function race(iterable) {\n  \n}`,
       solution: `function race(iterable) {
   return new Promise((resolve, reject) => {
@@ -208,7 +212,9 @@ Example: with \`flaky\` failing twice then returning \`"ok"\`, \`await retry(fla
 
 Clean up after yourself: once \`promise\` settles, the timer should be cleared.
 
-Example: \`await withTimeout(later(50, "x"), 10)\` → rejects with \`Error: Timed out after 10 ms\``,
+Example: \`await withTimeout(later(50, "x"), 10)\` → rejects with \`Error: Timed out after 10 ms\`
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `function withTimeout(promise, ms) {\n  \n}`,
       solution: `function withTimeout(promise, ms) {
   let timer;
@@ -243,7 +249,9 @@ Example: \`await withTimeout(later(50, "x"), 10)\` → rejects with \`Error: Tim
 
 If a task rejects, reject with its error and don't start the remaining tasks. An empty list resolves to \`[]\`.
 
-Example: \`await runSequentially([() => later(10, "a"), () => later(5, "b")])\` → \`["a", "b"]\``,
+Example: \`await runSequentially([() => later(10, "a"), () => later(5, "b")])\` → \`["a", "b"]\`
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `async function runSequentially(tasks) {\n  \n}`,
       solution: `async function runSequentially(tasks) {
   const results = [];
@@ -278,7 +286,9 @@ Example: \`await runSequentially([() => later(10, "a"), () => later(5, "b")])\` 
 
 If a task rejects, reject with its error. An empty list resolves to \`[]\`; a \`limit\` larger than the list is fine.
 
-Example: \`await runWithLimit([() => later(30, "a"), () => later(5, "b"), () => later(5, "c")], 2)\` → \`["a", "b", "c"]\` ("c" starts when "b" finishes)`,
+Example: \`await runWithLimit([() => later(30, "a"), () => later(5, "b"), () => later(5, "c")], 2)\` → \`["a", "b", "c"]\` ("c" starts when "b" finishes)
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `async function runWithLimit(tasks, limit) {\n  \n}`,
       solution: `async function runWithLimit(tasks, limit) {
   const results = new Array(tasks.length);
@@ -370,7 +380,9 @@ Example: \`await promisify((a, b, cb) => cb(null, a + b))(2, 3)\` → \`5\``,
 
 A rejected task rejects only its own promise; the queue keeps going with the next task.
 
-Example: \`const q = createQueue(); q.enqueue(() => later(20, "a")); await q.enqueue(() => later(1, "b"))\` → \`"b"\`, after "a" has finished`,
+Example: \`const q = createQueue(); q.enqueue(() => later(20, "a")); await q.enqueue(() => later(1, "b"))\` → \`"b"\`, after "a" has finished
+
+In the examples, \`later(ms, value)\` resolves with \`value\` after \`ms\` ms (the tests define it).`,
       starter: `function createQueue() {\n  \n}`,
       solution: `function createQueue() {
   let tail = Promise.resolve();

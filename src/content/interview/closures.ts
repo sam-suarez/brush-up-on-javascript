@@ -280,7 +280,7 @@ Example: \`partial((a, b, c) => a + b + c, 1, 2)(3)\` → \`6\``,
       kind: "implement",
       difficulty: 2,
       tags: ["closures"],
-      description: `Write \`createBankAccount(initial = 0)\` returning an object with exactly three methods: \`deposit(amount)\`, \`withdraw(amount)\` and \`getBalance()\`. The balance is not reachable as a property.
+      description: `Write \`createBankAccount(initial = 0)\` returning an object with three methods: \`deposit(amount)\`, \`withdraw(amount)\` and \`getBalance()\`. The balance must not be reachable as a property.
 
 \`deposit\` and \`withdraw\` return the new balance. Both throw a \`RangeError\` when \`amount\` is not a positive number. \`withdraw\` throws an \`Error\` with the message \`"Insufficient funds"\` when \`amount\` exceeds the balance, leaving the balance unchanged.
 
@@ -330,8 +330,8 @@ Example: \`const acc = createBankAccount(100); acc.withdraw(30)\` → \`70\``,
           code: `const acc = createBankAccount(20);\nassert.throws(() => acc.withdraw(21), "Insufficient funds");\nassert.equal(acc.getBalance(), 20);`,
         },
         {
-          name: "exposes only the three methods",
-          code: `const acc = createBankAccount(5);\nassert.deepEqual(Object.keys(acc).sort(), ["deposit", "getBalance", "withdraw"]);`,
+          name: "does not expose the balance as a property",
+          code: `const acc = createBankAccount(5);\nconst methods = ["deposit", "getBalance", "withdraw"];\nfor (const m of methods) assert.isFunction(acc[m]);\nassert.deepEqual(Object.keys(acc).filter((k) => !methods.includes(k)), []);`,
         },
       ],
     },

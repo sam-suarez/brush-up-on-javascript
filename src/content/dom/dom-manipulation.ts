@@ -65,9 +65,9 @@ assert.deepEqual(texts.slice(-2), ["first", "second"]);`,
       kind: "implement",
       difficulty: 1,
       tags: ["dom"],
-      description: `Write \`removeCompleted()\` that removes every \`li.completed\` from \`#tasks\` and returns how many it removed. Items without the class stay, in order.
+      description: `Write \`removeCompleted()\` that removes every \`li.completed\` from \`#tasks\` and returns how many it removed. Items without the class stay, in order. A second call finds nothing left and returns \`0\`.
 
-Example: with the markup shown, \`removeCompleted()\` → \`2\``,
+Example: the list starts with four items, two of them completed, so \`removeCompleted()\` → \`2\``,
       html: `<ul id="tasks">
   <li class="completed">Write tests</li>
   <li>Fix the bug</li>

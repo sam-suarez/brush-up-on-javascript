@@ -10,7 +10,7 @@ const topic: Topic = {
   challenges: [
     {
       slug: "create-from-parts",
-      title: "Create a date from parts (month is zero-based)",
+      title: "Create a date from parts",
       kind: "fix",
       difficulty: 1,
       tags: ["dates"],
@@ -206,7 +206,7 @@ Example: \`monthBounds(new Date(2024, 1, 10)).end\` → \`Thu Feb 29 2024 23:59:
 
 Comparing the strings directly is wrong when offsets differ.
 
-Example: \`sortByTime([{ name: "b", at: "2024-03-01T08:00:00Z" }, { name: "a", at: "2024-03-01T09:00:00+02:00" }])\` → \`a first (07:00Z), then b\``,
+Example: \`sortByTime([{ name: "b", at: "2024-03-01T08:00:00Z" }, { name: "a", at: "2024-03-01T09:00:00+02:00" }]).map((e) => e.name)\` → \`["a", "b"]\` (\`a\` is 07:00 UTC)`,
       starter: `function sortByTime(events) {\n  return [...events].sort((x, y) => x.at.localeCompare(y.at));\n}\n`,
       solution: `function sortByTime(events) {
   return events.toSorted((x, y) => Date.parse(x.at) - Date.parse(y.at));

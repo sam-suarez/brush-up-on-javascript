@@ -166,7 +166,7 @@ Example: \`sameValue(NaN, NaN)\` → \`true\`, \`sameValue(0, -0)\` → \`false\
       kind: "predict",
       difficulty: 2,
       tags: ["coercion"],
-      description: `Read the code and fill \`expected\` with the lines it logs, in order. An empty string logs as \`""\`.
+      description: `Read the code and fill \`expected\` with the lines it logs, in order. A line that logs an empty string is \`""\` in \`expected\`.
 
 \`\`\`js
 console.log(String([1, 2])); // → "1,2"

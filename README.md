@@ -41,7 +41,7 @@ Your code never runs in the app's window. Each run creates a fresh `<iframe sand
 | --- | --- |
 | `⌘/Ctrl + Enter` | Run code |
 | `⌘/Ctrl + Shift + R` | Reset to starter code |
-| `Alt + →` / `Alt + ←` | Next / previous challenge |
+| `Alt + →` / `Alt + ←` | Next / previous challenge (on macOS, outside the editor, where it moves by word) |
 | `Esc` then `Tab` | Leave the editor (Tab otherwise indents) |
 
 ## Docs

@@ -67,7 +67,7 @@ Two columns. Left sidebar 260px, fixed, scrolls independently. Main content scro
 - Editor state: the user's draft is saved per challenge on every change (debounced 300ms) and restored on return. Reset restores the starter and clears the draft.
 - For DOM challenges, a "Preview" card between the editor and console shows the sandbox iframe visibly so the user can see the DOM they are manipulating. For all other challenges the iframe is hidden.
 
-### Interview mode `/interview`
+### Interview mode `/interview-mode`
 - Setup form: pick topics (multi-select grouped by course, default = all of Interview Prep), difficulty filter, count (5 / 10 / 15), time limit (none / 15 / 30 / 45 min).
 - Session: same workbench without the left rail, a top bar with "3 of 10", elapsed/remaining timer, Skip button. No hints, no solution until the session ends.
 - Results: solved / skipped / failed per challenge, time per challenge, links to review each. Nothing in the session changes topic progress unless the challenge was solved, in which case it counts as solved like anywhere else.

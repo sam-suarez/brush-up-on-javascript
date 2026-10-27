@@ -19,6 +19,9 @@ export function useWorkbenchShortcuts(handlers: ShortcutHandlers) {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      // Already handled, e.g. by the editor: Mod+Enter runs from its own keymap, and on macOS
+      // Alt+←/→ moves by word there.
+      if (event.defaultPrevented) return;
       const mod = isMac ? event.metaKey : event.ctrlKey;
       const h = ref.current;
       if (mod && event.key === "Enter" && h.run) {
